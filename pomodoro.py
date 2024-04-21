@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter.messagebox as msgbox
 import math
 
 root = Tk()
@@ -6,7 +7,7 @@ root.title('Pomodoro App')
 root.config(padx=100, pady=50, bg='#ecf7e6')
 
 FOCUS_TIME = 0.1
-SHORT_BREAK_TIME = 5
+SHORT_BREAK_TIME = 0.2
 LONG_BREAK_TIME = 15
 STATE = 'FOCUS'
 pomodoro = ''
@@ -15,7 +16,7 @@ count = 0
 
 def start_timer():
     global STATE
-    print(STATE)
+
     if (STATE == 'FOCUS'):
         status_label.config(text='Focusing')
         countdown(FOCUS_TIME * 60)
@@ -26,27 +27,40 @@ def start_timer():
         status_label.config(text='Long Break')
         countdown(LONG_BREAK_TIME * 60)
 
+    start_button.grid_forget()
+
 def countdown(time):
     global pomodoro, count, STATE
+
+    
     minutes = math.floor(time/60)
     seconds = time % 60
     timer_label.config(text = f'{minutes:02}:{seconds:02}')
     if (time > 0):
         root.after(1000, countdown , time-1)
-    else:
+    elif (time <= 0 and STATE == 'FOCUS'):
         pomodoro += "🍅"
         count += 1
         pomodoro_count_label.config(text=pomodoro)
         if (count % 4 != 0):
             STATE = 'SHORTBREAK'
             status_label.config(text='Take a short break')
+            start_button.grid(column=1, row=2)
             start_button.config(text='Start a short break')
-            print(STATE)
         else:
             STATE = 'LONGBREAK'
             status_label.config(text='Take a long break')
+            start_button.grid(column=1, row=2)
             start_button.config(text='Start a long break')
+    else:
+        STATE = 'FOCUS'
+        status_label.config(text='Break finished')
+        start_button.grid(column=1, row=2)
+        start_button.config(text='Start focusing')
 
+def exit_msg():
+    msgbox.showinfo(title='', message='You did {} pomodoro this session'.format(count))
+    root.destroy()
 
 tomato = PhotoImage(file='tomato.png')
 
@@ -71,4 +85,5 @@ pomodoro_count_label.grid(column=1, row=4)
 start_button = Button(root, text='Start Focusing', bg='#d13b3b', font=10, command=start_timer)
 start_button.grid(column=1, row=2)
 
+root.protocol('WM_DELETE_WINDOW', exit_msg)
 root.mainloop()
