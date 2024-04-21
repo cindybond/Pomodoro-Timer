@@ -6,8 +6,8 @@ root = Tk()
 root.title('Pomodoro App')
 root.config(padx=100, pady=50, bg='#ecf7e6')
 
-FOCUS_TIME = 0.1
-SHORT_BREAK_TIME = 0.2
+FOCUS_TIME = 25
+SHORT_BREAK_TIME = 5
 LONG_BREAK_TIME = 15
 STATE = 'FOCUS'
 pomodoro = ''
