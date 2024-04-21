@@ -19,3 +19,5 @@ After the timer is up, a button to start a short break will appear, and you will
 After every 4 consecutive pomodoro, a button to start a long break will appear and long break lasts for 15 minutes instead.
 
 On exiting the program, a notification will appear to show how many pomodoro has been done this session.
+
+![Screenshot 2024-04-22 101927](https://github.com/cindybond/Pomodoro-Timer/assets/54518119/f0f994da-c63c-471f-91ee-6ea7def932cc)
